@@ -1,0 +1,28 @@
+spring:
+  rabbitmq:
+    host: 127.0.0.1
+    port: 5672
+    username: admin
+    password: 123456
+    publisher-confirms: true #消息发送到Exchange后触发回调
+    publisher-returns: true  #消息从交换器发送到对应队列失败时触发
+    virtual-host: /
+    template:
+      retry:
+        max-attempts: 3
+        enabled: true
+      mandatory: true
+    listener:
+      simple:
+        #消费者数量
+        concurrency: 2
+        max-concurrency: 4
+        #开启消费失败重试
+        retry:
+          max-attempts: 3
+          enabled: true
+          initial-interval: 1000ms
+        #预取的消息数量,spring amqp2.0开始默认值为250，之前默认为1
+        prefetch: 1
+        default-requeue-rejected: true
+        acknowledge-mode: manual

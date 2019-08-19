@@ -1,0 +1,17 @@
+server:
+  port: ${serverPort}
+  tomcat:
+    uri-encoding: UTF-8
+  
+    
+spring:
+  resources:
+    static-locations: classpath:/static/
+    
+  mvc:
+    view:
+      prefix: /static/
+      suffix: .html
+
+  
+

@@ -1,0 +1,36 @@
+*{margin:0; padding:0}
+body{background:#cccccc;/*#eef6f9*/}
+li{list-style:none}
+#top{background:url(bgSelf.gif); height:82px;}
+#body{/*height:500px*/}
+#left{width:188px; float:left; /*border:1px solid #FF0000; height:400px;*/ background:url(left_top.gif) no-repeat}
+.box{background:url(left_mid.gif) repeat-y; margin-top:15px; height:350px; overflow:auto}
+.box_f{background:url(left_foot.gif) 0 -4px  no-repeat; height:33px}
+#right{width:168px; float:right; /*border:1px solid #FF0000;*/ height:400px; background:url(right_top.gif) right top no-repeat}
+.right_box{background:url(right_mid.gif) right repeat-y; margin-top:13px; height:351px}
+.right_box_foot{background:url(right_foot.gif) no-repeat; height:34px}
+#mid{/*border:1px solid #0000FF;*/ margin:0 168px 0 188px; background:url(body_top.gif) left top repeat-x #FFFFFF}
+#mid_top{height:20px; position:absolute; top:61px; left:200px; }
+.list{float:left; margin-left:5px; background:#CCCCCC; /*border-bottom:1px solid #990000*/ cursor:pointer}
+#mid_con{height:250px; overflow:auto; padding-top:20px}
+#mid_mid{height:30px; background:#CCCCCC; float:left; width:100%}
+#mid_say{float:left; display:inline; height:88px; background:#FFFFFF}
+#mid_say textarea{width:300px; height:80px; padding:0; margin:0;/*border:solid 1px #ccc;*/ border:0; overflow:auto;}
+#mid_say .textarea2{border:2px solid #66FFFF}
+#mid_sand{float:right; display:inline; /*border:1px solid #990000;*/ margin-top:40px; margin-right:10px; height:35px; width:93px; text-align:center; font-size:36px; background:url(ok.gif); cursor:pointer; overflow:hidden; text-indent:-9999px}
+#mid_foot{height:118px; *height:88px}
+.mid_box{background:url(body_foot.gif) left repeat-x; height:30px; width:100%; float:left}
+.my_show{padding:20px 5px; padding-top:0; overflow:auto}
+
+.h3{background:url(icons.gif) 0 -110px no-repeat; color:#444444; font-size:14px; margin-left:10px; padding:2px 15px; font-weight:normal; cursor:pointer}
+.click_h3{background:url(icons.gif) 0 -126px no-repeat;}
+.ul{margin-left:10px; display:none; width:150px}
+.ul li{font-size:12px; background:url(li.gif) 20px center no-repeat; padding:3px 0 3px 35px; margin-top:3px; cursor:pointer; display:block}
+.ul .hover{background:url(li.gif) 20px center no-repeat #effaff}
+.my_say_con p{padding:5px 10px}
+#right_top,#right_mid,#right_foot{padding:20px; padding-right:0px; overflow:auto; float:left; width:130px; text-align:center}
+.td_user{background:url(user_title.gif) left no-repeat; padding-left:20px; padding-right:5px; font-size:12px; height:21px}
+.td_hide{background:url(user_title.gif) right no-repeat; padding:0 5px; width:14px; overflow:hidden; text-indent:-9999px}
+.td_user_click{background:url(user_title_click.gif) left no-repeat;}
+.td_hide_click{background:url(user_title_click.gif) right no-repeat;}
+.blank{clear:both}

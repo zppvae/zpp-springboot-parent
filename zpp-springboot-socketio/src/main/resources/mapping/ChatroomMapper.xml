@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.zpp.springboot.socketio.mapper.ChatroomMapper">
+    <resultMap id="ChatroomResultMap" type="org.zpp.springboot.socketio.model.Chatroom">
+        <id column="room_id" property="roomId" jdbcType="INTEGER"/>
+        <result column="create_user_id" property="createUserId" jdbcType="VARCHAR"/>
+        <result column="room_name" property="roomName" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="DATE"/>
+    </resultMap>
+    <sql id="Chatroom_Column_List">
+      room_id, room_name,create_time,create_user_id
+    </sql>
+
+    <select id="getList" resultMap="ChatroomResultMap" parameterType="org.zpp.springboot.socketio.model.Chatroom">
+        select
+        <include refid="Chatroom_Column_List"/>
+        from t_chatroom
+        <where>
+            <if test="createUserId != null">
+                  create_user_id=#{createUserId}
+            </if>
+            <if test="roomName != null">
+                room_name=#{roomName}
+            </if>
+            <if test="roomId != null">
+                room_id=#{roomId}
+            </if>
+        </where>
+
+    </select>
+
+    <insert id="save" parameterType="org.zpp.springboot.socketio.model.Chatroom" keyProperty="roomId" useGeneratedKeys="true">
+        insert into t_chatroom
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            create_user_id,
+            room_name,
+            create_time
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            #{createUserId},#{roomName},now()
+        </trim>
+    </insert>
+
+    <update id="update" parameterType="org.zpp.springboot.socketio.model.Chatroom">
+      update t_chatroom set
+        <if test="roomName != null">
+            room_name=#{roomName}
+        </if>
+      where room_id=#{roomId}
+    </update>
+
+    <insert id="addMembers" parameterType="java.util.List">
+        insert into t_chatroom_member(user_id,room_id,join_time)
+        values
+        <foreach collection="list" item="item" index="index" separator="," >
+            (#{item.userId},#{item.roomId},now())
+        </foreach>
+    </insert>
+
+    <delete id="removeMember" parameterType="org.zpp.springboot.socketio.model.ChatroomMember">
+        delete from t_chatroom_member where room_id=#{roomId} and user_id=#{userId}
+    </delete>
+
+    <select id="getListByUserId" resultMap="ChatroomResultMap" parameterType="java.lang.Integer">
+        SELECT cr.room_id,room_name,create_time from t_chatroom cr
+          inner join t_chatroom_member crm on cr.room_id=crm.room_id where crm.user_id=#{userId}
+    </select>
+
+    <select id="getListByRoomId" resultType="org.zpp.springboot.socketio.model.ChatroomMember" parameterType="java.lang.Integer">
+        SELECT room_id,cm.user_id,join_time,u.user_name as userName from t_chatroom_member cm
+          left join t_user u on cm.user_id=u.user_id where cm.room_id=#{roomId}
+
+    </select>
+</mapper>

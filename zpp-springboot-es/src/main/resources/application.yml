@@ -1,0 +1,16 @@
+spring:
+  data:
+    elasticsearch:
+      ####集群名称
+      cluster-name: myes
+      cluster-nodes: 192.168.139.128:9300
+  freemarker:
+    suffix: .ftl
+    content-type: text/html
+    charset: UTF-8
+    # 设置页面缓存
+    cache: false
+    template-loader-path:
+      - classpath:/templates
+    mvc:
+      static-path-pattern: /static/**

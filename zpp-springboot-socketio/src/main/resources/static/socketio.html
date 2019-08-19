@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head lang="zh">
+    <meta charset="utf-8"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Demo Chat</title>
+    <link href="https://cdn.bootcss.com/bootstrap/4.0.0-alpha.6/css/bootstrap.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.js"></script>
+    <!--moment js下载地址:http://momentjs.com/ -->
+    <script src="http://momentjs.com/downloads/moment.min.js"></script>
+    <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+    <style>
+        body {padding: 20px;} #console {height: 400px;overflow: auto;} .username-msg {color: orange;} .connect-msg {color: green;}.disconnect-msg {color: red;}.send-msg {color: #888}
+    </style>
+    <script>
+        var clientId = 'user2',targetId = 'user1';
+        var socket = io.connect('http://localhost:8081?clientId=' + clientId);
+        socket.on('connect', function () {
+            showMsg(':<span class="connect-msg">成功连接到服务器!</span>');
+        });
+        socket.on('message', function (data,ackCallback) {
+            if(ackCallback) {
+                console.log('客户端接收到消息');
+                ackCallback('返回到服务器的确认消息')
+            }
+            showMsg('<br /><span class="username-msg">' + data.sourceSessionId + ':</span> ' + data.msg);
+        });
+        socket.on('disconnect', function () {
+            showMsg(':<span class="disconnect-msg">服务已断开！</span>');
+        });
+        function sendDisconnect() {
+            socket.disconnect();
+        }
+        function sendMessage() {
+            var message = $('#msg').val();
+            $('#msg').val('');
+            var jsonObject = {
+                sourceSessionId: clientId,
+                targetSessionId: targetId,
+                msg: message
+            };
+            socket.emit('message', jsonObject);
+        }
+        function showMsg(message) {
+            var currentTime = "<span class='time'>" + moment().format('YYYY-MM-DD HH:MM:SS') + "</span>";
+            var element = $("<div>" + currentTime + "" + message + "</div>");
+            $('#console').append(element);
+        }
+        $(document).keydown(function (e) {
+            if (e.keyCode == 13) {
+                $('#send').click();
+            }
+        });
+    </script>
+</head>
+<body>
+    <h1>Netty-socket.io Demo</h1><br/>
+    <div id="console" class="well"></div>
+    <form class="well form-inline" onsubmit="return false;">
+        <input id="msg" class="input-xlarge" type="text" placeholder="Type something..."/>&nbsp;&nbsp;
+        <button type="button" onClick="sendMessage()" class="btn" id="send">Send</button>&nbsp;&nbsp;
+        <button type="button" onClick="sendDisconnect()" class="btn">Disconnect</button>
+    </form>
+</body>
+</html>
