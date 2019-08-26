@@ -1,0 +1,17 @@
+server:
+  port: 9999
+
+
+mqtt:
+  # 连接服务器配置
+  username: admin
+  password: admin
+  url: ws://127.0.0.1:61623
+  # 消息推送的默认主题
+  defaultTopic: test
+  # 消息发送者配置
+  producer:
+    clientId: producer
+  # 消息消费者配置
+  consumer:
+    clientId: consumer

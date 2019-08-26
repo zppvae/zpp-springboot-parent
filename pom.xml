@@ -110,7 +110,8 @@
 		<module>zpp-springboot-redis</module>
 		<module>zpp-springboot-mybatis</module>
 		<module>zpp-springboot-es</module>
-	</modules>
+        <module>zpp-springboot-mqtt</module>
+    </modules>
 	
 	
 </project>
