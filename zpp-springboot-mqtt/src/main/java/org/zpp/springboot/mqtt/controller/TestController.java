@@ -3,7 +3,7 @@ package org.zpp.springboot.mqtt.controller;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import org.zpp.springboot.mqtt.component.MQTTProducer;
+import org.zpp.springboot.mqtt.component.MqttProducer;
 
 /**
  * @author zpp
@@ -16,7 +16,7 @@ import org.zpp.springboot.mqtt.component.MQTTProducer;
 public class TestController {
 
     @Autowired
-    private MQTTProducer mqttProducer;
+    private MqttProducer mqttProducer;
 
     @GetMapping("/send/{msg}")
     public String send(@PathVariable String msg){

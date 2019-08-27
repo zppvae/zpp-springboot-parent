@@ -14,11 +14,16 @@ import org.springframework.integration.mqtt.core.MqttPahoClientFactory;
 import org.springframework.integration.mqtt.inbound.MqttPahoMessageDrivenChannelAdapter;
 import org.springframework.integration.mqtt.outbound.MqttPahoMessageHandler;
 import org.springframework.integration.mqtt.support.DefaultPahoMessageConverter;
-import org.springframework.messaging.Message;
 import org.springframework.messaging.MessageChannel;
 import org.springframework.messaging.MessageHandler;
-import org.springframework.messaging.MessagingException;
 
+/**
+ * mqtt配置
+ *
+ * https://docs.spring.io/spring-integration/docs/5.1.7.RELEASE/reference/html/#mqtt-inbound
+ *
+ * @author zpp
+ */
 @Configuration
 @Slf4j
 public class MqttConfig {
@@ -56,7 +61,7 @@ public class MqttConfig {
      * @return
      */
     @Bean
-    public MqttConnectOptions getMqttConnectOptions() {
+    public MqttConnectOptions mqttConnectOptions() {
         MqttConnectOptions options = new MqttConnectOptions();
         // false，服务器会保留客户端的连接记录
         // true，表示每次连接到服务器都以新的身份连接
@@ -81,7 +86,7 @@ public class MqttConfig {
     @Bean
     public MqttPahoClientFactory mqttClientFactory() {
         DefaultMqttPahoClientFactory factory = new DefaultMqttPahoClientFactory();
-        factory.setConnectionOptions(getMqttConnectOptions());
+        factory.setConnectionOptions(mqttConnectOptions());
         return factory;
     }
 

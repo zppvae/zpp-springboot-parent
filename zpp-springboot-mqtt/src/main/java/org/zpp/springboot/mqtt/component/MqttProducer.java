@@ -8,11 +8,17 @@ import org.zpp.springboot.mqtt.config.MqttConfig;
 
 /**
  * 消息发送者
+ *
+ * @author zpp
  */
 @Component
 @MessagingGateway(defaultRequestChannel = MqttConfig.MQTT_OUTBOUND_CHANNEL)
-public interface MQTTProducer {
+public interface MqttProducer {
 
+    /**
+     * 发送消息到默认主题
+     * @param data
+     */
     void send(String data);
 
     /**
