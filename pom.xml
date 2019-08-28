@@ -111,6 +111,7 @@
 		<module>zpp-springboot-mybatis</module>
 		<module>zpp-springboot-es</module>
         <module>zpp-springboot-mqtt</module>
+        <module>zpp-springboot-webflux</module>
     </modules>
 	
 	
