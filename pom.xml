@@ -112,7 +112,8 @@
 		<module>zpp-springboot-es</module>
         <module>zpp-springboot-mqtt</module>
         <module>zpp-springboot-webflux</module>
-    </modules>
+		<module>zpp-springboot-common</module>
+	</modules>
 	
 	
 </project>
