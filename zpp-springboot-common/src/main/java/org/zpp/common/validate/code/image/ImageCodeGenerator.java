@@ -29,12 +29,7 @@ public class ImageCodeGenerator implements ValidateCodeGenerator {
 	private ValidateCodeProperties validateCodeProperties;
 	
 	@Override
-	public ImageCode generate(ServletWebRequest request) {
-		int width = ServletRequestUtils.getIntParameter(request.getRequest(), "width",
-				validateCodeProperties.getImage().getWidth());
-		int height = ServletRequestUtils.getIntParameter(request.getRequest(), "height",
-				validateCodeProperties.getImage().getHeight());
-
+	public ImageCode generate(int width,int height) {
 		//定义图形验证码的长、宽、验证码字符数、干扰元素个数
 		CircleCaptcha captcha = CaptchaUtil.createCircleCaptcha(width,height,
 				validateCodeProperties.getImage().getLength(), 20);

@@ -1,6 +1,6 @@
 package org.zpp.common.constant;
 
-public interface Constants {
+public interface BootCommonConstants {
 
 	/**
 	 * 默认的处理验证码的url前缀
@@ -20,5 +20,28 @@ public interface Constants {
 	 */
 	public static final String DEFAULT_PARAMETER_NAME_MOBILE = "mobile";
 
+	/**
+	 * 图片验证码 type /code/image
+	 */
+	public static final String IMAGE_CODE_TYPE = "image";
 
+	/**
+	 * 图片验证码宽度字段名
+	 */
+	public static final String IMAGE_CODE_WIDTH_NAME = "width";
+
+	/**
+	 * 图片验证码高度字段名
+	 */
+	public static final String IMAGE_CODE_HEIGHT_NAME = "height";
+
+	/**
+	 * 短信验证码 type /code/sms
+	 */
+	public static final String SMS_CODE_TYPE = "sms";
+
+	/**
+	 * 验证码请求头字段
+	 */
+	public static final String VALIDATE_CODE_HEADER_NAME = "deviceId";
 }

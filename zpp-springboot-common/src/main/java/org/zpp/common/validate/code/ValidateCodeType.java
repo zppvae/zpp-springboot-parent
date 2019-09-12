@@ -1,7 +1,7 @@
 package org.zpp.common.validate.code;
 
 
-import org.zpp.common.constant.Constants;
+import org.zpp.common.constant.BootCommonConstants;
 
 public enum ValidateCodeType {
 	
@@ -11,7 +11,7 @@ public enum ValidateCodeType {
 	SMS {
 		@Override
 		public String getParamNameOnValidate() {
-			return Constants.DEFAULT_PARAMETER_NAME_CODE_SMS;
+			return BootCommonConstants.DEFAULT_PARAMETER_NAME_CODE_SMS;
 		}
 	},
 	/**
@@ -20,7 +20,7 @@ public enum ValidateCodeType {
 	IMAGE {
 		@Override
 		public String getParamNameOnValidate() {
-			return Constants.DEFAULT_PARAMETER_NAME_CODE_IMAGE;
+			return BootCommonConstants.DEFAULT_PARAMETER_NAME_CODE_IMAGE;
 		}
 	};
 

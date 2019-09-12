@@ -2,11 +2,10 @@ package org.zpp.common.validate.code.sms;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.ServletRequestUtils;
-import org.springframework.web.context.request.ServletWebRequest;
-import org.zpp.common.constant.Constants;
 import org.zpp.common.validate.code.ValidateCode;
 import org.zpp.common.validate.code.impl.AbstractValidateCodeProcessor;
+
+import java.io.OutputStream;
 
 
 /**
@@ -23,9 +22,7 @@ public class SmsCodeProcessor extends AbstractValidateCodeProcessor<ValidateCode
 	private SmsCodeSender smsCodeSender;
 	
 	@Override
-	protected void send(ServletWebRequest request, ValidateCode validateCode) throws Exception {
-		String paramName = Constants.DEFAULT_PARAMETER_NAME_MOBILE;
-		String mobile = ServletRequestUtils.getRequiredStringParameter(request.getRequest(), paramName);
+	protected void send(OutputStream os, String mobile, ValidateCode validateCode) throws Exception {
 		smsCodeSender.send(mobile, validateCode.getCode());
 	}
 

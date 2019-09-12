@@ -1,6 +1,5 @@
 package org.zpp.common.validate.code;
 
-import org.springframework.web.context.request.ServletWebRequest;
 
 /**
  * 验证码生成器
@@ -9,6 +8,14 @@ import org.springframework.web.context.request.ServletWebRequest;
  */
 public interface ValidateCodeGenerator {
 
-	ValidateCode generate(ServletWebRequest request);
+	/**
+	 * 生成验证码
+	 * @param width
+	 * 			验证码宽度（图片）
+	 * @param height
+	 * 			验证码高度（图片）
+	 * @return
+	 */
+	ValidateCode generate(int width,int height);
 
 }

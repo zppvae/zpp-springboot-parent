@@ -16,7 +16,7 @@ public class SmsCodeGenerator implements ValidateCodeGenerator {
 	private ValidateCodeProperties validateCodeProperties;
 
 	@Override
-	public ValidateCode generate(ServletWebRequest request) {
+	public ValidateCode generate(int width,int height) {
 		String code = RandomStringUtils.randomNumeric(validateCodeProperties.getSms().getLength());
 		return new ValidateCode(code, validateCodeProperties.getSms().getExpireIn());
 	}

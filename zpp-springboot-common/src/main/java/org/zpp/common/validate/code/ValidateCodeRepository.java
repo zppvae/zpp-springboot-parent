@@ -1,33 +1,32 @@
 package org.zpp.common.validate.code;
 
-import org.springframework.web.context.request.ServletWebRequest;
 
 public interface ValidateCodeRepository {
 
     /**
      * 保存验证码
      *
-     * @param request
+     * @param deviceId
      * @param code
      * @param validateCodeType
      */
-    void save(ServletWebRequest request, ValidateCode code, ValidateCodeType validateCodeType);
+    void save(String deviceId, ValidateCode code, ValidateCodeType validateCodeType);
 
     /**
      * 获取验证码
      *
-     * @param request
+     * @param deviceId
      * @param validateCodeType
      * @return
      */
-    ValidateCode get(ServletWebRequest request, ValidateCodeType validateCodeType);
+    ValidateCode get(String deviceId, ValidateCodeType validateCodeType);
 
     /**
      * 移除验证码
      *
-     * @param request
+     * @param deviceId
      * @param codeType
      */
-    void remove(ServletWebRequest request, ValidateCodeType codeType);
+    void remove(String deviceId, ValidateCodeType codeType);
 
 }
