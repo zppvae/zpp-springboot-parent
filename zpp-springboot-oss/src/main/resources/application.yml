@@ -1,0 +1,17 @@
+aliyun:
+  oss:
+    # oss对外服务的访问域名
+    endpoint: oss-cn-shenzhen.aliyuncs.com
+    # 访问身份验证中用到用户标识
+    accessKeyId: test
+    # 用户用于加密签名字符串和oss用来验证签名字符串的密钥
+    accessKeySecret: test
+    # oss的存储空间
+    bucketName: test-oss
+    policy:
+      expire: 300 # 签名有效期(S)
+    maxSize: 10 # 上传文件大小(M)
+    callback: http://localhost:8080/api/aliyun/oss/callback # 文件上传成功后的回调地址
+    dir:
+      # 上传文件夹路径前缀
+      prefix: test/images/
