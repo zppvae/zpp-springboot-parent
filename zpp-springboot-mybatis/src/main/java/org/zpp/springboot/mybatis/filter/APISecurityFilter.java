@@ -30,15 +30,15 @@ public class APISecurityFilter implements Filter {
     public void doFilter(ServletRequest args0, ServletResponse args1, FilterChain chain) throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) args0;
         // 获取token
-        String token = request.getHeader("token");
-        // 获取时间戳
-        Long timestamp = Long.valueOf(request.getHeader("timestamp"));
-        // 获取随机字符串
-        String nonceStr = request.getHeader("nonceStr");
-        // 获取请求地址
-        String url = request.getHeader("url");
-        // 获取签名
-        String signature = request.getHeader("signature");
+//        String token = request.getHeader("token");
+//        // 获取时间戳
+//        Long timestamp = Long.valueOf(request.getHeader("timestamp"));
+//        // 获取随机字符串
+//        String nonceStr = request.getHeader("nonceStr");
+//        // 获取请求地址
+//        String url = request.getHeader("url");
+//        // 获取签名
+//        String signature = request.getHeader("signature");
 
         // 判断参数是否为空
 //        if (StringUtils.isBlank(token) || StringUtils.isBlank(timestamp)

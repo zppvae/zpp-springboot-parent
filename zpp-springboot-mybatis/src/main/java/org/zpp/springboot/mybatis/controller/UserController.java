@@ -2,10 +2,7 @@ package org.zpp.springboot.mybatis.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.zpp.springboot.mybatis.common.R;
 import org.zpp.springboot.mybatis.common.annotation.Log;
 import org.zpp.springboot.mybatis.model.SysUser;
@@ -28,9 +25,9 @@ public class UserController {
     private SysUserService sysUserService;
 
     @PostMapping("/user")
-    public String add(){
+    public R add(){
         SysUser user = null;
-        int length = 4000000;
+        int length = 2;
         List<SysUser> list = new ArrayList<>(length);
         for (int i = 0; i < length; i++) {
             user = new SysUser();
@@ -42,7 +39,10 @@ public class UserController {
             list.add(user);
         }
         sysUserService.insertBatch(list);
-        return "success";
+        return R.builder()
+                .code(200)
+                .msg("success")
+                .build();
     }
 
     @Log("测试日志")
@@ -60,5 +60,11 @@ public class UserController {
                 .code(200)
                 .msg("success")
                 .build();
+    }
+
+    @GetMapping("/users/{userId}")
+    public R get(@PathVariable("userId") Integer userId){
+        SysUser user = sysUserService.selectById(userId);
+        return new R(user);
     }
 }

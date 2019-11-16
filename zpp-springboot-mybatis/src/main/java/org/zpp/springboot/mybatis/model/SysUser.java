@@ -1,6 +1,7 @@
 package org.zpp.springboot.mybatis.model;
 
 import com.baomidou.mybatisplus.activerecord.Model;
+import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.Version;
 import lombok.Data;
 
@@ -15,6 +16,7 @@ public class SysUser extends Model<SysUser> {
     /**
      * 主键ID
      */
+    @TableId("user_id")
     private Integer userId;
 
     /**
@@ -33,8 +35,8 @@ public class SysUser extends Model<SysUser> {
      */
     private Date updateTime;
 
-    @Version
-    private Integer version;
+//    @Version
+//    private Integer version;
 
     @Override
     protected Serializable pkVal() {

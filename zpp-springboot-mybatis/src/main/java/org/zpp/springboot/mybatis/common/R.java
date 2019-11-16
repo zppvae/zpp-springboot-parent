@@ -13,7 +13,7 @@ import java.io.Serializable;
  */
 @Builder
 @ToString
-public class R implements Serializable {
+public class R<T> implements Serializable {
 
     @Getter
     @Setter
@@ -23,9 +23,24 @@ public class R implements Serializable {
     @Setter
     private String msg;
 
+    @Getter
+    @Setter
+    private T data;
+
     public R(int code, String msg) {
         this.code = code;
         this.msg = msg;
     }
 
+    public R(T data){
+        this.data = data;
+        this.code = 200;
+        this.msg = "success";
+    }
+
+    public R(int code, String msg,T data){
+        this.data = data;
+        this.code = code;
+        this.msg = msg;
+    }
 }
