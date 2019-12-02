@@ -1,8 +1,8 @@
 package org.zpp.springboot.es.reposiory;
 
 import org.springframework.data.elasticsearch.repository.ElasticsearchRepository;
-import org.zpp.springboot.es.model.CloudDiskEntity;
+import org.zpp.springboot.es.model.CloudDisk;
 
-public interface CloudDiskReposiory extends ElasticsearchRepository<CloudDiskEntity, String> {
+public interface CloudDiskReposiory extends ElasticsearchRepository<CloudDisk, String> {
 
 }
