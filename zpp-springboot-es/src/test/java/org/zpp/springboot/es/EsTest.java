@@ -16,8 +16,11 @@ import org.elasticsearch.action.update.UpdateRequest;
 import org.elasticsearch.action.update.UpdateRequestBuilder;
 import org.elasticsearch.action.update.UpdateResponse;
 import org.elasticsearch.client.transport.TransportClient;
+import org.elasticsearch.common.geo.GeoPoint;
+import org.elasticsearch.common.unit.DistanceUnit;
 import org.elasticsearch.common.unit.TimeValue;
 import org.elasticsearch.common.xcontent.XContentFactory;
+import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.script.ScriptType;
 import org.elasticsearch.script.mustache.SearchTemplateRequestBuilder;
@@ -32,7 +35,9 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.zpp.springboot.es.ESApplication;
 
 import java.net.InetAddress;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -193,6 +198,135 @@ public class EsTest {
                 .setRequest(new SearchRequest("sale_shop").types("sales"))
                 .get()
                 .getResponse();
+
+        for(SearchHit searchHit : searchResponse.getHits().getHits()) {
+            System.out.println(searchHit.getSourceAsString());
+        }
+    }
+
+    /**
+     * 全文检索
+     */
+    @Test
+    public void fullText(){
+        SearchResponse searchResponse = transportClient.prepareSearch("car_shop")
+                .setTypes("cars")
+                .setQuery(QueryBuilders.matchQuery("brand", "宝马"))
+                .get();
+
+        for(SearchHit searchHit : searchResponse.getHits().getHits()) {
+            System.out.println(searchHit.getSourceAsString());
+        }
+    }
+
+    @Test
+    public void multiMatchQuery(){
+        SearchResponse searchResponse = transportClient.prepareSearch("car_shop")
+                .setTypes("cars")
+                .setQuery(QueryBuilders.multiMatchQuery("宝马", "brand", "name"))
+                .get();
+
+        for(SearchHit searchHit : searchResponse.getHits().getHits()) {
+            System.out.println(searchHit.getSourceAsString());
+        }
+    }
+
+    @Test
+    public void termQuery(){
+        SearchResponse searchResponse = transportClient.prepareSearch("car_shop")
+                .setTypes("cars")
+                .setQuery(QueryBuilders.termQuery("name.raw", "宝马318"))
+                .get();
+
+        for(SearchHit searchHit : searchResponse.getHits().getHits()) {
+            System.out.println(searchHit.getSourceAsString());
+        }
+    }
+
+    /**
+     * 前缀搜索
+     */
+    @Test
+    public void prefixQuery(){
+        SearchResponse searchResponse = transportClient.prepareSearch("car_shop")
+                .setTypes("cars")
+                .setQuery(QueryBuilders.prefixQuery("name", "宝"))
+                .get();
+
+        for(SearchHit searchHit : searchResponse.getHits().getHits()) {
+            System.out.println(searchHit.getSourceAsString());
+        }
+    }
+
+    /**
+     * 多种条件组合查询
+     */
+    @Test
+    public void boolQuery(){
+        QueryBuilder queryBuilder = QueryBuilders.boolQuery()
+                .must(QueryBuilders.matchQuery("brand", "宝马"))
+                .mustNot(QueryBuilders.termQuery("name.raw", "宝马318"))
+                .should(QueryBuilders.rangeQuery("produce_date").gte("2017-01-01").lte("2017-01-31"))
+                .filter(QueryBuilders.rangeQuery("price").gte(280000).lte(350000));
+
+        SearchResponse searchResponse = transportClient.prepareSearch("car_shop")
+                .setTypes("cars")
+                .setQuery(queryBuilder)
+                .get();
+
+        for(SearchHit searchHit : searchResponse.getHits().getHits()) {
+            System.out.println(searchHit.getSourceAsString());
+        }
+
+    }
+
+    /**
+     * 搜索两个坐标点组成的一个区域
+     */
+    @Test
+    public void geoLocationQuery(){
+        SearchResponse searchResponse = transportClient.prepareSearch("car_shop")
+                .setTypes("cars")
+                .setQuery(QueryBuilders.geoBoundingBoxQuery("pin.location")
+                        .setCorners(40.73, -74.1, 40.01, -71.12))
+                .get();
+
+        for(SearchHit searchHit : searchResponse.getHits().getHits()) {
+            System.out.println(searchHit.getSourceAsString());
+        }
+    }
+
+    /**
+     * 指定一个区域，由三个坐标点组成，比如上海大厦，东方明珠塔，上海火车站
+     */
+    @Test
+    public void geoLocationQuery2(){
+        List<GeoPoint> points = new ArrayList<GeoPoint>();
+        points.add(new GeoPoint(40.73, -74.1));
+        points.add(new GeoPoint(40.01, -71.12));
+        points.add(new GeoPoint(50.56, -90.58));
+
+        SearchResponse searchResponse = transportClient.prepareSearch("car_shop")
+                .setTypes("cars")
+                .setQuery(QueryBuilders.geoPolygonQuery("pin.location", points))
+                .get();
+
+        for(SearchHit searchHit : searchResponse.getHits().getHits()) {
+            System.out.println(searchHit.getSourceAsString());
+        }
+    }
+
+    /**
+     * 搜索距离当前位置在200公里内的4s店
+     */
+    @Test
+    public void geoLocationQuery3(){
+        SearchResponse searchResponse = transportClient.prepareSearch("car_shop")
+                .setTypes("cars")
+                .setQuery(QueryBuilders.geoDistanceQuery("pin.location")
+                        .point(40, -70)
+                        .distance(200, DistanceUnit.KILOMETERS))
+                .get();
 
         for(SearchHit searchHit : searchResponse.getHits().getHits()) {
             System.out.println(searchHit.getSourceAsString());
