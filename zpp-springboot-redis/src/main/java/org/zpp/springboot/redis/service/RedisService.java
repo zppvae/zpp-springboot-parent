@@ -1,6 +1,7 @@
 package org.zpp.springboot.redis.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
 
@@ -12,6 +13,13 @@ public class RedisService {
 
 	@Autowired
 	private StringRedisTemplate stringRedisTemplate;
+
+	@Autowired
+	private RedisTemplate redisTemplate;
+
+	public void set(String key, Object value) {
+		redisTemplate.opsForValue().set(key,value);
+	}
 
 	public void set(String key, Object object, Long time) {
 		// 存放String 类型
@@ -60,4 +68,19 @@ public class RedisService {
 		return stringRedisTemplate.opsForValue().get(key);
 	}
 
+	/**
+	 * 判断是否存在key
+	 * @param key
+	 * @return
+	 */
+	public boolean exists(final String key){
+		return redisTemplate.hasKey(key);
+	}
+
+	public boolean remove(final String key){
+		if (exists(key)) {
+			return redisTemplate.delete(key);
+		}
+		return false;
+	}
 }
