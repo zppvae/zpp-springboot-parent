@@ -14,6 +14,7 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.zpp.springboot.redis.RedisApplication;
 import org.zpp.springboot.redis.model.User;
+import org.zpp.springboot.redis.repository.UserRepository;
 import org.zpp.springboot.redis.service.UserService;
 
 import java.io.Serializable;
@@ -36,6 +37,9 @@ public class RedisTest {
 
     @Rule
     public ContiPerfRule i = new ContiPerfRule();
+
+    @Autowired
+    private UserRepository userRepository;
 
     /**
      * 用户业务逻辑注入
@@ -77,5 +81,21 @@ public class RedisTest {
     @Test
     public void findAll() {
         userService.findAll();
+    }
+
+    @Test
+    public void test() throws Exception {
+        userRepository.save(new User(1,"222", "123456",10));
+
+        User u1 = userRepository.findByUserName("222");
+        System.out.println("第一次查询：" + u1.getUserAge());
+
+        User u2 = userRepository.findByUserName("222");
+        System.out.println("第二次查询：" + u2.getUserAge());
+
+        u1.setUserAge(20);
+        userRepository.save(u1);
+        User u3 = userRepository.findByUserName("222");
+        System.out.println("第三次查询：" + u3.getUserAge());
     }
 }

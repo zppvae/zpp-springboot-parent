@@ -5,6 +5,8 @@ spring:
   jpa:
     database: mysql
     show-sql: true
+#    hibernate:
+#      ddl-auto: create-drop
   datasource:
     druid:
       username: root

@@ -11,6 +11,11 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 import java.io.Serializable;
 
+/**
+ *  @AutoConfigureAfter 在内置的配置类之后在配置，不会被覆盖
+ *
+ * @author zpp
+ */
 @Configuration
 @AutoConfigureAfter(RedisAutoConfiguration.class)
 public class RedisCacheAutoConfiguration {
