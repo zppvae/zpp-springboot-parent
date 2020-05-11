@@ -4,12 +4,13 @@ import com.baomidou.mybatisplus.activerecord.Model;
 import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.Version;
 import lombok.Data;
+import org.zpp.springboot.mybatis.converter.SupportConverter;
 
 import java.io.Serializable;
 import java.util.Date;
 
 @Data
-public class SysUser extends Model<SysUser> {
+public class SysUser extends Model<SysUser> implements SupportConverter {
 
     private static final long serialVersionUID = 1L;
 

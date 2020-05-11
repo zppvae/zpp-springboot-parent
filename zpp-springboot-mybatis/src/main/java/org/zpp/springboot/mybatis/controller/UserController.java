@@ -63,8 +63,7 @@ public class UserController {
     }
 
     @GetMapping("/users/{userId}")
-    public R get(@PathVariable("userId") Integer userId){
-        SysUser user = sysUserService.selectById(userId);
-        return new R(user);
+    public R get(@PathVariable("userId") SysUser sysUser){
+        return new R(sysUser);
     }
 }
