@@ -115,7 +115,7 @@
 		<module>zpp-springboot-common</module>
         <module>zpp-springboot-oss</module>
         <module>zpp-springboot-sharding</module>
-    </modules>
+	</modules>
 	
 	
 </project>

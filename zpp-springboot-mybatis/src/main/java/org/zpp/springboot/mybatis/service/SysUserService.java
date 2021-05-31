@@ -9,4 +9,5 @@ import org.zpp.springboot.mybatis.model.SysUser;
  */
 public interface SysUserService extends IService<SysUser> {
 
+    public void insert();
 }

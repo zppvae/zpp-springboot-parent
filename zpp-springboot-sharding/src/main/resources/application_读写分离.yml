@@ -1,0 +1,125 @@
+server:
+  port: 9000
+
+
+spring:
+  shardingsphere:
+    datasource:
+      # 两个主库，4个从库（一主两从）
+      names: ds-master-0,ds-master-1,ds-master-0-slave-0,ds-master-0-slave-1,ds-master-1-slave-0,ds-master-1-slave-1
+      # 主库 ds-master-0
+      ds-master-0:
+        type: com.alibaba.druid.pool.DruidDataSource
+        driver-class-name: com.mysql.jdbc.Driver
+        url: jdbc:mysql://127.0.0.1:3306/master0?characterEncoding=utf-8&autoReconnect=true&serverTimezone=Asia/Shanghai
+        username: root
+        password: 123456
+      # 主库ds-master-0 从库1
+      ds-master-0-slave-0:
+        type: com.alibaba.druid.pool.DruidDataSource
+        driver-class-name: com.mysql.jdbc.Driver
+        url: jdbc:mysql://127.0.0.1:3306/master0-slave0?characterEncoding=utf-8&autoReconnect=true&serverTimezone=Asia/Shanghai
+        username: root
+        password: 123456
+      # 主库ds-master-0 从库2
+      ds-master-0-slave-1:
+        type: com.alibaba.druid.pool.DruidDataSource
+        driver-class-name: com.mysql.jdbc.Driver
+        url: jdbc:mysql://127.0.0.1:3306/master0-slave1?characterEncoding=utf-8&autoReconnect=true&serverTimezone=Asia/Shanghai
+        username: root
+        password: 123456
+      # 主库 ds-master-1
+      ds-master-1:
+        type: com.alibaba.druid.pool.DruidDataSource
+        driver-class-name: com.mysql.jdbc.Driver
+        url: jdbc:mysql://127.0.0.1:3306/master1?characterEncoding=utf-8&autoReconnect=true&serverTimezone=Asia/Shanghai
+        username: root
+        password: 123456
+      # 主库ds-master-1 从库1
+      ds-master-1-slave-0:
+        type: com.alibaba.druid.pool.DruidDataSource
+        driver-class-name: com.mysql.jdbc.Driver
+        url: jdbc:mysql://127.0.0.1:3306/master1-slave0?characterEncoding=utf-8&autoReconnect=true&serverTimezone=Asia/Shanghai
+        username: root
+        password: 123456
+      # 主库ds-master-1 从库2
+      ds-master-1-slave-1:
+        type: com.alibaba.druid.pool.DruidDataSource
+        driver-class-name: com.mysql.jdbc.Driver
+        url: jdbc:mysql://127.0.0.1:3306/master1-slave1?characterEncoding=utf-8&autoReconnect=true&serverTimezone=Asia/Shanghai
+        username: root
+        password: 123456
+    # 读写分离配置
+    masterslave:
+      # 除了轮询策略，还支持random（随机策略）
+      load-balance-algorithm-type: round_robin
+    # 分片规则
+    sharding:
+      tables:
+        t_dict:
+          key-generator:
+            column: id
+            type: SNOWFLAKE
+            props:
+              worker:
+                id: 123
+              max:
+                vibration:
+                  offset: 2
+        # 逻辑表t_user，物理表：t_user_0-t_user_1
+        t_user:
+          # t_user_0-t_user_1表在ds_0、ds_1分区中
+          actualDataNodes: ds_$->{0..1}.t_user_$->{0..1}
+          # t_user表分库策略
+          databaseStrategy:
+            inline:
+              shardingColumn: id
+              algorithmExpression: ds_$->{id % 2}
+          # t_user表分表策略
+          tableStrategy:
+            inline:
+              # 数据切分字段
+              shardingColumn: id
+              # t_user表的切分表达式
+              algorithmExpression: t_user_$->{id % 2}
+      default-data-source-name: ds-master-0
+      # 逻辑主从库名和实际主从库映射关系
+      master-slave-rules:
+        ds_0:
+          # ds_0区的的主库名称
+          master-data-source-name: ds-master-0
+          # ds_1区的的从库名称
+          slave-data-source-names: ds-master-0-slave-0, ds-master-0-slave-1
+        ds_1:
+          # ds_1区的的主库名称
+          master-data-source-name: ds-master-1
+          # ds_1区的的从库名称
+          slave-data-source-names: ds-master-1-slave-0, ds-master-1-slave-1
+      # 配置公共表（广播表），每个库中都有广播表，数据相同
+      broadcast-tables: t_dict
+    props:
+      sql.show: true
+  main:
+    # 一个实体类对应多张表（分表），后面的覆盖前面的
+    allow-bean-definition-overriding: true
+
+# mybaits-plus配置
+mybatis-plus:
+  mapper-locations: classpath:/mapper/*Mapper.xml
+  typeAliasesPackage: org.zpp.springboot.sharding.model
+  global-config:
+    #主键类型  0:"数据库ID自增", 1:"用户输入ID",2:"全局唯一ID (数字类型唯一ID)", 3:"全局唯一ID UUID";
+    id-type: 2
+    #字段策略 0:"忽略判断",1:"非 NULL 判断"),2:"非空判断"
+    field-strategy: 1
+    #驼峰下划线转换
+    db-column-underline: true
+    #刷新mapper 调试神器
+    refresh-mapper: true
+    db-config:
+      db-type: MYSQL
+    #数据库大写下划线转换
+    #capital-mode: true
+  configuration:
+    map-underscore-to-camel-case: true
+    cache-enabled: true

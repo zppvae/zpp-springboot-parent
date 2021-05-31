@@ -1,6 +1,6 @@
 package org.zpp.springboot.sharding;
 
-import org.mybatis.spring.annotation.MapperScan;
+import com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceAutoConfigure;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -8,8 +8,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @author zpp
  * @date 2019/11/8 13:33
  */
-@MapperScan("org.zpp.springboot.sharding.mapper")
-@SpringBootApplication
+@SpringBootApplication(exclude = DruidDataSourceAutoConfigure.class)
 public class ShardingApplication {
 
     public static void main(String[] args){

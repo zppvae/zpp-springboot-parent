@@ -14,7 +14,7 @@ spring:
 
 elasticsearch:
   cluster:
-    name: myes
-  ip: 192.168.139.128
+    name: docker-cluster
+  ip: 192.168.139.152
   port: 9300
   pool: 5

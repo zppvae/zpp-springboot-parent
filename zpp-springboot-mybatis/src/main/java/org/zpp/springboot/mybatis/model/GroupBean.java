@@ -15,7 +15,7 @@ public class GroupBean {
     @NotNull(message = "id 不能为空", groups = ValidateGroup.Update.class)
     private Integer id;
 
-    @NotBlank(message = "name 不允许为空", groups = ValidateGroup.Default.class)
+    @NotBlank(message = "name 不允许为空", groups = {ValidateGroup.Default.class,ValidateGroup.Update.class})
     private String name;
 
     @NotNull(message = "price 不允许为空", groups = ValidateGroup.Default.class)

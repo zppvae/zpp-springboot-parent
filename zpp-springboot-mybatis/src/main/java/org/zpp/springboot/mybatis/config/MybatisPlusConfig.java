@@ -8,7 +8,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 
-@EnableTransactionManagement
 @Configuration
 @MapperScan("org.zpp.springboot.mybatis.mapper")
 public class MybatisPlusConfig {

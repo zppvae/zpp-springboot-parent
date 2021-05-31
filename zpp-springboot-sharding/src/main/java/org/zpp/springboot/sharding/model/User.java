@@ -1,20 +1,30 @@
 package org.zpp.springboot.sharding.model;
 
-import com.baomidou.mybatisplus.annotation.TableName;
-import com.baomidou.mybatisplus.extension.activerecord.Model;
+import com.baomidou.mybatisplus.activerecord.Model;
+import com.baomidou.mybatisplus.annotations.TableId;
+import com.baomidou.mybatisplus.annotations.TableName;
+import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.experimental.Accessors;
 
+import java.io.Serializable;
+
+@Builder
 @Data
-@EqualsAndHashCode(callSuper = true)
-@Accessors(chain = true)
-@TableName("user")
+@TableName("t_user")
+@EqualsAndHashCode(callSuper = false)
 public class User extends Model<User> {
 
+    @TableId("id")
     private int id;
 
-    private String name;
+    private String username;
 
-    private int age;
+    private String password;
+
+    @Override
+    protected Serializable pkVal() {
+        return this.id;
+    }
+
 }

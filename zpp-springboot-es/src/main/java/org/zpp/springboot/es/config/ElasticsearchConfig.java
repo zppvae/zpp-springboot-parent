@@ -52,6 +52,7 @@ public class ElasticsearchConfig {
                     .build();
             //配置信息Settings自定义
             transportClient = new PreBuiltTransportClient(esSetting);
+            // 通讯IP
             TransportAddress transportAddress = new TransportAddress(InetAddress.getByName(hostName), Integer.parseInt(port));
             transportClient.addTransportAddresses(transportAddress);
         } catch (Exception e) {
