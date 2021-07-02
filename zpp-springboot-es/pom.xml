@@ -12,7 +12,7 @@
     <artifactId>zpp-springboot-es</artifactId>
 
     <properties>
-        <elasticsearch.version>6.2.2</elasticsearch.version>
+        <elasticsearch.version>6.8.15</elasticsearch.version>
     </properties>
 
     <dependencies>
