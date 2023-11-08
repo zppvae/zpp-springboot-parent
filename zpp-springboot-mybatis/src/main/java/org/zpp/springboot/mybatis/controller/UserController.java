@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+import org.zpp.springboot.log.annotation.LogRecord;
 import org.zpp.springboot.mybatis.common.R;
 import org.zpp.springboot.mybatis.common.annotation.Log;
 import org.zpp.springboot.mybatis.model.SysUser;
@@ -51,8 +52,13 @@ public class UserController {
                 .build();
     }
 
+    @LogRecord(content = "第一次测试，方法参数为#{#userId}，使用自定义方法【firstTest】解析结果：#{@{firstTest(#userId)}}", bizNo = "001")
     @GetMapping("/users/{userId}")
-    public R get(@PathVariable("userId") SysUser sysUser){
-        return new R(sysUser);
+    public R get(@PathVariable("userId") Long userId){
+        return new R(userId);
+    }
+
+    private String firstTest(Long userId) {
+        return userId + ", hello";
     }
 }

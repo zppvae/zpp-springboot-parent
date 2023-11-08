@@ -1,0 +1,4 @@
+server:
+  port: 16099
+  tomcat:
+    uri-encoding: UTF-8

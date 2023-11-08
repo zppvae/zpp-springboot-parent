@@ -1,5 +1,5 @@
 server:
-  port: ${serverPort}
+  port: 9898
   tomcat:
     uri-encoding: UTF-8
   
@@ -12,6 +12,9 @@ spring:
     view:
       prefix: /static/
       suffix: .html
+
+  main:
+    allow-bean-definition-overriding: true
 
   
 

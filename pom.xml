@@ -14,7 +14,6 @@
     </parent>
 
 	<properties>
-		<hutool.version>4.1.19</hutool.version>
 		<fastjson.version>1.2.46</fastjson.version>
 	</properties>
 	<dependencies>
@@ -62,12 +61,6 @@
 		</dependency>
 
 		<dependency>
-			<groupId>org.apache.commons</groupId>
-			<artifactId>commons-lang3</artifactId>
-			<version>3.9</version>
-		</dependency>
-
-		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
 			<version>1.18.0</version>
@@ -79,12 +72,6 @@
 			<artifactId>guava</artifactId>
 			<version>28.0-jre</version>
 		</dependency>
-
-		<dependency>
-			<groupId>cn.hutool</groupId>
-			<artifactId>hutool-all</artifactId>
-			<version>4.5.16</version>
-		</dependency>
 	</dependencies>
 
 	<dependencyManagement>
@@ -95,6 +82,11 @@
 				<version>Edgware.SR3</version>
 				<type>pom</type>
 				<scope>import</scope>
+			</dependency>
+			<dependency>
+				<groupId>cn.hutool</groupId>
+				<artifactId>hutool-all</artifactId>
+				<version>5.8.16</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
@@ -115,7 +107,8 @@
 		<module>zpp-springboot-common</module>
         <module>zpp-springboot-oss</module>
         <module>zpp-springboot-sharding</module>
-	</modules>
+        <module>zpp-springboot-test</module>
+    </modules>
 	
 	
 </project>

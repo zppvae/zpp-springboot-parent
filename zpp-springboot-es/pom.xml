@@ -78,6 +78,12 @@
                 </exclusion>
             </exclusions>
         </dependency>
+
+        <dependency>
+            <groupId>org.zpp.springboot</groupId>
+            <artifactId>zpp-springboot-common</artifactId>
+            <version>1.0</version>
+        </dependency>
     </dependencies>
 
     <build>

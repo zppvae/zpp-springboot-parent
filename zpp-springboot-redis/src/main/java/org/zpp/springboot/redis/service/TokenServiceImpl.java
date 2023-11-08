@@ -16,7 +16,7 @@ public class TokenServiceImpl implements TokenService{
 
     @Override
     public String createToken() {
-        String str = RandomUtil.randomUUID();
+        String str = RandomUtil.randomString(10);
         StringBuilder token = new StringBuilder();
         try {
             token.append(RedisConstant.TOKEN)
